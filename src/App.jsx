@@ -1,47 +1,73 @@
 import { useState } from 'react';
 import './App.css';
+import { v4 as uuidv4 } from 'uuid';
+//import DatePicker from 'react-datepicker';
+//import 'react-datepicker/dist/react-datepicker.css';
 
 import GeneralInfoForm from './components/GeneralInfoForm';
+import ExperienceInfoForm from './components/ExperienceInfoForm';
 import Resume from './components/Resume';
 
 function App() {
-  const [name, setName] = useState('John Doe');
-  const [address, setAddress] = useState('4 King Ave, Temple Hills, MD 20748');
-  const [phone, setPhone] = useState('+1-202-555-0117');
-  const [email, setEmail] = useState('john_doe@gmail.com');
+  const [generalInfo, setGeneralInfo] = useState({
+    name: '',
+    address: '',
+    phone: '',
+    email: '',
+  });
 
-  const handleNameChange = (e) => {
-    e.target.value ? setName(e.target.value) : setName('John Doe');
+  const [expInfo, setExpInfo] = useState([
+    { title: '', startDate: '', endDate: '', details: '', id: uuidv4() },
+  ]);
+
+  const handleGeneralInfoChange = (e) => {
+    const { key } = e.target.dataset;
+    setGeneralInfo({ ...generalInfo, [key]: e.target.value });
   };
-  const handleAddressChange = (e) => {
-    e.target.value
-      ? setAddress(e.target.value)
-      : setAddress('4 King Ave, Temple Hills, MD 20748');
+
+  const handleExpInfoChange = (e) => {
+    const inputValue = e.target.value;
+    const { key } = e.target.dataset;
+    const form = e.target.closest('.form');
+    const id = form.id;
+
+    setExpInfo(
+      expInfo.map((exp) => {
+        if (exp.id === id) exp[key] = inputValue;
+        return exp;
+      })
+    );
   };
-  const handlePhoneChange = (e) => {
-    e.target.value ? setPhone(e.target.value) : setPhone('+1-202-555-0117');
-  };
-  const handleEmailChange = (e) => {
-    e.target.value ? setEmail(e.target.value) : setEmail('john_doe@gmail.com');
+
+  const addNewExp = () => {
+    setExpInfo([
+      ...expInfo,
+      { title: '', startDate: '', endDate: '', details: '', id: uuidv4() },
+    ]);
   };
 
   return (
     <>
       <h1>Resume builder</h1>
       <main className="grid grid-cols-2">
-        <article className="bg-yellow-500">
+        <article className="bg-yellow-500 p-10">
           <section>
-            <h2>General Information</h2>
+            <h2 className="text-xl font-bold">General Information</h2>
             <GeneralInfoForm
-              handleNameChange={handleNameChange}
-              handleAddressChange={handleAddressChange}
-              handlePhoneChange={handlePhoneChange}
-              handleEmailChange={handleEmailChange}
+              onChange={handleGeneralInfoChange}
+              generalInfo={generalInfo}
+            />
+          </section>
+          <section>
+            <h2 className="text-xl font-bold pt-5">Experience</h2>
+            <ExperienceInfoForm
+              expInfo={expInfo}
+              handleExpInfoChange={handleExpInfoChange}
+              addNewExp={addNewExp}
             />
           </section>
         </article>
-
-        <Resume name={name} address={address} phone={phone} email={email} />
+        <Resume generalInfo={generalInfo} expInfo={expInfo} />
       </main>
     </>
   );
