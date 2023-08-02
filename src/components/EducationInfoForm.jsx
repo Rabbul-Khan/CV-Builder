@@ -1,46 +1,47 @@
 import { useState } from 'react';
 
-const ExperienceInfoForm = ({ expInfo, handleExpInfoChange, addNewExp }) => {
+const EducationInfoForm = ({ eduInfo, handleEduInfoChange, addNewEdu }) => {
   const [disabled, setDisabled] = useState(false);
   return (
     <>
-      {expInfo.map((exp) => {
+      {eduInfo.map((edu) => {
         return (
-          <form key={exp.id} id={exp.id} className="form">
+          <form key={edu.id} id={edu.id} className="form">
             <label className="label">
-              <span className="label-text text-base">Position</span>
+              <span className="label-text text-base">Degree</span>
             </label>
             <input
               type="text"
-              placeholder="Project Manager"
+              placeholder="BS in Computer Science and Engineering"
               className="input input-bordered input-sm w-full max-w-xs"
-              onChange={handleExpInfoChange}
-              data-key="title"
-              value={exp.title}
+              onChange={handleEduInfoChange}
+              data-key="degree"
+              value={edu.degree}
               disabled={disabled}
             />
             <label className="label">
-              <span className="label-text text-base">Company</span>
+              <span className="label-text text-base">School</span>
             </label>
             <input
               type="text"
-              placeholder="XYZ Limited"
+              placeholder="ABC University"
               className="input input-bordered input-sm w-full max-w-xs"
-              onChange={handleExpInfoChange}
-              data-key="company"
-              value={exp.company}
+              onChange={handleEduInfoChange}
+              data-key="school"
+              value={edu.school}
               disabled={disabled}
             />
+
             <label className="label">
               <span className="label-text text-base">Start Date</span>
             </label>
             <input
               type="text"
-              placeholder="2002"
+              placeholder="1998"
               className="input input-bordered input-sm w-full max-w-xs"
-              onChange={handleExpInfoChange}
+              onChange={handleEduInfoChange}
               data-key="startDate"
-              value={exp.startDate}
+              value={edu.startDate}
               disabled={disabled}
             />
             <label className="label">
@@ -48,24 +49,13 @@ const ExperienceInfoForm = ({ expInfo, handleExpInfoChange, addNewExp }) => {
             </label>
             <input
               type="text"
-              placeholder="2006"
+              placeholder="2002"
               className="input input-bordered input-sm w-full max-w-xs"
-              onChange={handleExpInfoChange}
+              onChange={handleEduInfoChange}
               data-key="endDate"
-              value={exp.endDate}
+              value={edu.endDate}
               disabled={disabled}
             />
-            <label className="label">
-              <span className="label-text text-base">Details</span>
-            </label>
-            <textarea
-              className="textarea textarea-bordered w-full max-w-xs"
-              placeholder="Effectively upsold products by introducing accessories and other add-ons, adding $150,000 to average monthly sales. Generated brand awareness and positive product impressions to increase sales 22%."
-              onChange={handleExpInfoChange}
-              data-key="details"
-              value={exp.details}
-              disabled={disabled}
-            ></textarea>
             <div className="mt-5 h-0 border border-gray-300"></div>
           </form>
         );
@@ -75,10 +65,10 @@ const ExperienceInfoForm = ({ expInfo, handleExpInfoChange, addNewExp }) => {
           className="btn btn-sm"
           disabled={disabled}
           onClick={() => {
-            addNewExp();
+            addNewEdu();
           }}
         >
-          + Experience
+          + Education
         </button>
         <button
           className="btn btn-sm"
@@ -104,7 +94,7 @@ const ExperienceInfoForm = ({ expInfo, handleExpInfoChange, addNewExp }) => {
   );
 };
 
-export default ExperienceInfoForm;
+export default EducationInfoForm;
 
 // const [startDate, setStartDate] = useState(new Date('2014/02/08'));
 // const [endDate, setEndDate] = useState(new Date('2024/04/08'));
